@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { logout } from '../lib/auth';
+import AppContext from '../context/AppContext';
 
 import { Container, Nav, NavItem } from 'reactstrap';
 
 const Layout = ({ children }) => {
   const title = 'Welcome to Foodery';
+
+  const { user, setUser } = useContext(AppContext);
   return (
     <div>
       <Head>
@@ -36,15 +40,31 @@ const Layout = ({ children }) => {
           </NavItem>
 
           <NavItem className='ml-auto'>
-            <Link href='/login'>
-              <a className='nav-link'>Sign In</a>
-            </Link>
+            {user ? (
+              <h5 className='m-0 text-primary'>{user.username}</h5>
+            ) : (
+              <Link href='/register'>
+                <a className='nav-link'>Register</a>
+              </Link>
+            )}
           </NavItem>
-
           <NavItem>
-            <Link href='/register'>
-              <a className='nav-link'> Sign Up</a>
-            </Link>
+            {user ? (
+              <Link href='/'>
+                <a
+                  className='nav-link'
+                  onClick={() => {
+                    logout();
+                    setUser(null);
+                  }}>
+                  Logout
+                </a>
+              </Link>
+            ) : (
+              <Link href='/login'>
+                <a className='nav-link'>Login</a>
+              </Link>
+            )}
           </NavItem>
         </Nav>
       </header>
