@@ -1,7 +1,7 @@
+import { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 import { gql } from 'apollo-boost';
-
 import {
   Button,
   Card,
@@ -12,6 +12,9 @@ import {
   Col,
   Row
 } from 'reactstrap';
+
+import Cart from '../../components/Cart';
+import AppContext from '../../context/AppContext';
 
 const GET_RESTAURANT_DISHES = gql`
   query($id: ID!) {
@@ -32,6 +35,7 @@ const GET_RESTAURANT_DISHES = gql`
 `;
 
 const Restaurants = () => {
+  const appContext = useContext(AppContext);
   const router = useRouter();
   const { loading, error, data } = useQuery(GET_RESTAURANT_DISHES, {
     variables: { id: router.query.id }
@@ -46,7 +50,7 @@ const Restaurants = () => {
         <h1 className='text-uppercase py-3 mx-auto'>{restaurant.name}</h1>
         <Row>
           {restaurant.dishes.map((res) => (
-            <Col xs='6' sm='4' style={{ padding: 0 }} key={res.id}>
+            <Col md='3' style={{ padding: 0 }} key={res.id}>
               <Card style={{ margin: '0 10px' }}>
                 <CardImg
                   top={true}
@@ -58,7 +62,10 @@ const Restaurants = () => {
                   <CardText>{res.description}</CardText>
                 </CardBody>
                 <div className='card-footer'>
-                  <Button outline color='primary'>
+                  <Button
+                    outline
+                    color='primary'
+                    onClick={() => appContext.addItem(res)}>
                     + Add To Cart
                   </Button>
 
@@ -86,6 +93,11 @@ const Restaurants = () => {
               </Card>
             </Col>
           ))}
+          <Col md='3' style={{ padding: 0 }}>
+            <div>
+              <Cart />
+            </div>
+          </Col>
         </Row>
       </>
     );
