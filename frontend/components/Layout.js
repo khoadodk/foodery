@@ -68,7 +68,7 @@ const Layout = ({ children }) => {
           </NavItem>
         </Nav>
       </header>
-      <Container>{children}</Container>
+      <Container fluid={true}>{children}</Container>
     </div>
   );
 };
