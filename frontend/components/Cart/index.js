@@ -38,23 +38,23 @@ const Cart = () => {
                             style={{
                               height: 25,
                               padding: 0,
-                              width: 15,
+                              width: 25,
                               marginRight: 5,
                               marginLeft: 10
                             }}
                             onClick={() => appContext.addItem(item)}
-                            color='link'>
+                            bg-color='link'>
                             +
                           </Button>
                           <Button
                             style={{
                               height: 25,
                               padding: 0,
-                              width: 15,
+                              width: 25,
                               marginRight: 10
                             }}
                             onClick={() => appContext.removeItem(item)}
-                            color='link'>
+                            bg-color='link'>
                             -
                           </Button>
                           <span style={{ marginLeft: 5 }} id='item-quantity'>
@@ -71,7 +71,11 @@ const Cart = () => {
                 <div>
                   <Badge style={{ width: 200, padding: 10 }} color='light'>
                     <h5 style={{ fontWeight: 100, color: 'gray' }}>Total:</h5>
-                    <h3>${appContext.cart.total.toFixed(2)}</h3>
+                    <h3>
+                      $
+                      {appContext.cart.total &&
+                        appContext.cart.total.toFixed(2)}
+                    </h3>
                   </Badge>
                   <div
                     style={{
@@ -110,7 +114,7 @@ const Cart = () => {
         }
         #item-quantity {
           font-size: 0.95em;
-          padding-bottom: 4px;
+          margin-bottom: 10px;
           color: rgba(158, 158, 158, 1);
         }
         #item-name {

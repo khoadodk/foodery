@@ -18,14 +18,10 @@ class MyApp extends App {
     const token = Cookie.get('token');
     // restore cart from cookie, this could also be tracked in a db
     const cart = Cookie.getJSON('cart');
+    console.log(cart);
     //if items in cart, set items and total from cookie
-
     if (typeof cart === 'object' && cart !== 'undefined') {
-      cart.forEach((item) => {
-        this.setState({
-          cart: { items: cart, total: item.price * item.quantity }
-        });
-      });
+      this.setCart(cart);
     }
 
     if (token) {
@@ -47,6 +43,15 @@ class MyApp extends App {
       });
     }
   }
+
+  setCart = (cart) => {
+    const total = cart
+      .map((item) => {
+        return item.price * item.quantity;
+      })
+      .reduce((acc, index) => acc + index);
+    this.setState({ cart: { items: cart, total } });
+  };
 
   setUser = (user) => {
     this.setState({ user });
