@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { Row, Col } from 'reactstrap';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import InjectedCheckoutForm from '../components/checkout/CheckoutForm';
+import InjectedCheckoutForm from '../components/Checkout/CheckoutForm';
 import AppContext from '../context/AppContext';
 
 import Cart from '../components/Cart/';
